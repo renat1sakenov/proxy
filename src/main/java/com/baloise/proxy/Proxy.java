@@ -76,16 +76,18 @@ public class Proxy {
 		});
 		Password.ui = ui;
 		config.onPropertyChange(f -> {
-			UIType uiOld  = config.getUI();
-			config.reload();
-			if(!config.getUI().equals(uiOld)) {
+			Config oldConfig = config;
+			config = new Config().reload();
+			if(!config.getUI().equals(oldConfig.getUI())) {
 				// TODO can we recreate the UI without restarting the VM?
 				String msg = "UI changed. Restarting proxy virtual machine.";
 				log.info(msg);
 				ui.displayMessage("Proxy restarting", msg);
 				restart();
-			} else {
+			} else if(!config.equals(oldConfig)) {
 				start();
+			} else {
+				log.debug("Config did not change. Ignoring file change.");
 			}
 		});
 	}
