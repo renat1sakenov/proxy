@@ -31,6 +31,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProxyUISwt implements ProxyUI, Runnable {
 
@@ -41,6 +43,7 @@ public class ProxyUISwt implements ProxyUI, Runnable {
 	private boolean showing;
 	private  ImageRegistry images;
 	private Display display;
+	private static final Logger log = LoggerFactory.getLogger(ProxyUISwt.class);
 	
 	@Override
 	public ProxyUI withMenuEntry(String label, ActionListener actionListener) {
@@ -58,9 +61,7 @@ public class ProxyUISwt implements ProxyUI, Runnable {
 			log.debug("waiting for shell creation...");
 			try {
 				Thread.sleep(79);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			} catch (InterruptedException expected) {}
 		}
 	}
 
