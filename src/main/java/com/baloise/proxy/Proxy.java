@@ -52,6 +52,9 @@ public class Proxy {
 	public Proxy() {
 		config = new Config();
 		ui = createUI()
+		.withMenuEntry("Home", e -> {
+			config.openHome();
+		})
 		.withMenuEntry("Settings", e -> {
 			config.openPropertiesForEditing();
 		})

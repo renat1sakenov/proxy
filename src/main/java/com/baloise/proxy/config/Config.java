@@ -91,17 +91,32 @@ public class Config {
 	}
 
 	public void openPropertiesForEditing() {
-		File file = PROXY_PROPERTIES.toFile();
-		try {
-			Desktop.getDesktop().open(file);
-		} catch (IOException e) {
+		open(PROXY_PROPERTIES);
+	}
+
+	public void openHome() {
+		open(PROXY_HOME);
+	}
+
+	private void open(Path path) {
+		open(path.toFile(), 1);
+	}
+	
+	private void open(File path, int parents) {
+		IOException ex = null;
+		while (parents-- > 0) {
 			try {
-				Desktop.getDesktop().open(file.getParentFile());
-			} catch (IOException e1) {
-				log.debug(e1.getMessage(), e1);
+				Desktop.getDesktop().open(path);
+			} catch (IOException e) {
+				ex = e;
+				path = path.getParentFile();
 			}
 		}
+		if(ex != null) {
+			log.warn(ex.getMessage(), ex);
+		}
 	}
+	
 	
 	public Config reload() {
 		lazy_loadedProperties = new Properties();
@@ -203,7 +218,5 @@ public class Config {
 		Config other = (Config) obj;
 		return Objects.equals(loadedProperties(), other.loadedProperties());
 	}
-	
-	
 
 }
