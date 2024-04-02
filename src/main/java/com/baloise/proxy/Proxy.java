@@ -33,7 +33,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.baloise.proxy.config.Config;
-import com.baloise.proxy.config.Config.UIType;
 import com.baloise.proxy.ui.ProxyUI;
 import com.baloise.proxy.ui.ProxyUIAwt;
 import com.baloise.proxy.ui.ProxyUISwt;
